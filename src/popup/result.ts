@@ -3,7 +3,7 @@ import { options } from "../lib/options";
 import { createFaviconImage, getDomain, getFaviconImage, getObject } from "../lib/tool";
 import { ICommand } from "./commands";
 import { HighlightSpan } from "./highlight-span";
-import { getMatchScore, makeEllipsis, normalize } from "./util";
+import { createSvgElement, getMatchScore, makeEllipsis, normalize } from "./util";
 
 const iconWidth = constants.iconWidth;
 
@@ -147,14 +147,32 @@ export class HistoryResult extends Result<browser.history.HistoryItem>
   
   protected _getIcon()
   {
-    let i = document.createElement("span");
-    i.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-history" width="${iconWidth}" height="${iconWidth}" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-    <polyline points="12 8 12 12 14 14"></polyline>
-    <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5"></path>
- </svg>`.trim();
-    return i;
+    let svg = createSvgElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      class: "icon icon-tabler icon-tabler-history",
+      width:  iconWidth,
+      height: iconWidth,
+      viewBox: "0 0 24 24",
+      "stroke-width": "2",
+      stroke: "currentColor",
+      fill: "none",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    })
+    svg.append(createSvgElement("path", {
+      stroke: "none",
+      d: "M0 0h24v24H0z",
+      fill: "none"
+    }));
+    svg.append(createSvgElement("polyline", {
+      points: "12 8 12 12 14 14"
+    }));
+    svg.append(createSvgElement("path", {
+      d: "M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5"
+    }));
+    let span = document.createElement("span");
+    span.append(svg);
+    return span;
   }
   
   protected _getDetailElements(str: string)
@@ -163,7 +181,7 @@ export class HistoryResult extends Result<browser.history.HistoryItem>
     if(this.entity.lastVisitTime)
     {
       let s = document.createElement("span");
-      s.innerHTML = `visited: ${new Date(this.entity.lastVisitTime).toLocaleString()}`
+      s.innerText = `visited: ${new Date(this.entity.lastVisitTime).toLocaleString()}`
       res.push(s);
     }
     return res;
@@ -221,13 +239,29 @@ export class BookmarkResult extends Result<browser.bookmarks.BookmarkTreeNodeExt
   
   protected _getIcon()
   {
-    let i = document.createElement("span");
-    i.innerHTML = `
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="${iconWidth}" height="${iconWidth}" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-    <path d="M9 4h6a2 2 0 0 1 2 2v14l-5 -3l-5 3v-14a2 2 0 0 1 2 -2"></path>
-</svg>`.trim();
-    return i;
+    let svg = createSvgElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      class: "icon icon-tabler icon-tabler-bookmark",
+      width:  iconWidth,
+      height: iconWidth,
+      viewBox: "0 0 24 24",
+      "stroke-width": "2",
+      stroke: "currentColor",
+      fill: "none",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    })
+    svg.append(createSvgElement("path", {
+      stroke: "none",
+      d: "M0 0h24v24H0z",
+      fill: "none"
+    }));
+    svg.append(createSvgElement("path", {
+      d: "M9 4h6a2 2 0 0 1 2 2v14l-5 -3l-5 3v-14a2 2 0 0 1 2 -2"
+    }));
+    let span = document.createElement("span");
+    span.append(svg);
+    return span;
   }
   
   protected _getMainElements(str: string)
@@ -247,7 +281,7 @@ export class BookmarkResult extends Result<browser.bookmarks.BookmarkTreeNodeExt
   protected _getDetailElements(str: string): HTMLElement[]
   {
     let span = document.createElement("span");
-    span.innerHTML = this.entity.path.filter(e => !String.isNullOrEmpty(e)).join(" / ");
+    span.innerText = this.entity.path.filter(e => !String.isNullOrEmpty(e)).join(" / ");
     return [span];
   }
   
@@ -296,15 +330,41 @@ export class TabResult extends Result<browser.tabs.Tab>
   
   protected _getIcon()
   {
-    let i = document.createElement("span");
-    i.innerHTML = `
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-windows" width="${iconWidth}" height="${iconWidth}" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-    <path d="M17.8 20l-12 -1.5c-1 -.1 -1.8 -.9 -1.8 -1.9v-9.2c0 -1 .8 -1.8 1.8 -1.9l12 -1.5c1.2 -.1 2.2 .8 2.2 1.9v12.1c0 1.2 -1.1 2.1 -2.2 1.9z"></path>
-    <line x1="12" y1="5" x2="12" y2="19"></line>
-    <line x1="4" y1="12" x2="20" y2="12"></line>
- </svg>`.trim();
-    return i;
+    let svg = createSvgElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      class: "icon icon-tabler icon-tabler-bookmark",
+      width:  iconWidth,
+      height: iconWidth,
+      viewBox: "0 0 24 24",
+      "stroke-width": "2",
+      stroke: "currentColor",
+      fill: "none",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    })
+    svg.append(createSvgElement("path", {
+      stroke: "none",
+      d: "M0 0h24v24H0z",
+      fill: "none"
+    }));
+    svg.append(createSvgElement("path", {
+      d: "M17.8 20l-12 -1.5c-1 -.1 -1.8 -.9 -1.8 -1.9v-9.2c0 -1 .8 -1.8 1.8 -1.9l12 -1.5c1.2 -.1 2.2 .8 2.2 1.9v12.1c0 1.2 -1.1 2.1 -2.2 1.9z"
+    }));
+    svg.append(createSvgElement("line", {
+      x1: 12,
+      y1: 5,
+      x2: 12,
+      y2: 19
+    }));
+    svg.append(createSvgElement("line", {
+      x1: 4,
+      y1: 12,
+      x2: 20,
+      y2: 12
+    }));
+    let span = document.createElement("span");
+    span.append(svg);
+    return span;
   }
   
   protected _getMainElements(str: string)
@@ -363,14 +423,35 @@ export class CommandResult extends Result<ICommand>
   
   protected _getIcon()
   {
-    let i = document.createElement("span");
-    i.innerHTML = `
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-prompt" width="${iconWidth}" height="${iconWidth}" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-  <polyline points="5 7 10 12 5 17"></polyline>
-  <line x1="13" y1="17" x2="19" y2="17"></line>
- </svg>`.trim();
-    return i;
+    let svg = createSvgElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      class: "icon icon-tabler icon-tabler-bookmark",
+      width:  iconWidth,
+      height: iconWidth,
+      viewBox: "0 0 24 24",
+      "stroke-width": "2",
+      stroke: "currentColor",
+      fill: "none",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    })
+    svg.append(createSvgElement("path", {
+      stroke: "none",
+      d: "M0 0h24v24H0z",
+      fill: "none"
+    }));
+    svg.append(createSvgElement("polyline", {
+      points: "5 7 10 12 5 17"
+    }));
+    svg.append(createSvgElement("line", {
+      x1: 13,
+      y1: 17,
+      x2: 19,
+      y2: 17
+    }));
+    let span = document.createElement("span");
+    span.append(svg);
+    return span;
   }
   
   protected _getRightElement(str: string)
@@ -378,7 +459,7 @@ export class CommandResult extends Result<ICommand>
     if(this.entity.detail == null)
       return null;
     let s = document.createElement("span");
-    s.innerHTML = this.entity.detail;
+    s.innerText = this.entity.detail;
     return s;
   }
   

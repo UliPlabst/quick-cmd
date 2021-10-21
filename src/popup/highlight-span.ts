@@ -57,7 +57,7 @@ export class HighlightSpan
     if(String.isNullOrEmpty(m))
     {
       let s = document.createElement("span");
-      s.innerHTML = this.text;
+      s.innerText = this.text;
       c.appendChild(s);
       return c;
     }
@@ -76,12 +76,12 @@ export class HighlightSpan
         if(idx < r.start)
         {
           let s = document.createElement("span");
-          s.innerHTML = this.text.substring(idx, r.start);
+          s.innerText = this.text.substring(idx, r.start);
           c.appendChild(s);
         }
         let h = document.createElement("span");
         h.classList.add("highlight");
-        h.innerHTML = this.text.substring(r.start, r.end);
+        h.innerText = this.text.substring(r.start, r.end);
         c.appendChild(h);
         
         idx = r.end;
@@ -91,14 +91,14 @@ export class HighlightSpan
       if(r && r.end != this.text.length)
       {
         let h = document.createElement("span");
-        h.innerHTML = this.text.substring(r.end);
+        h.innerText = this.text.substring(r.end);
         c.appendChild(h);
       }
     }
     else
     {
       let h = document.createElement("span");
-      h.innerHTML = this.text;
+      h.innerText = this.text;
       c.appendChild(h);
     }
     return c;

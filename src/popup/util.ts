@@ -18,6 +18,21 @@ export function getMatchScore(text: string, match: string)
   return matchCnt * 100 - (text.length - matchingChars);
 }
 
+export function createSvgElement(tag: string, attrs: Record<string, any>): Element
+{
+  let e = document.createElementNS("http://www.w3.org/2000/svg", tag);  
+  for(let key of Object.keys(attrs))
+  {
+    let v = attrs[key];
+    setAttribute(e, key, v);
+  }
+  return e;
+}
+
+export function setAttribute(el: Element, key: string, value: any)
+{
+  el.setAttribute(key, value.toString());
+}
 
 export function debounced<T extends any[]>(timeout: number, fn: (...args: T) => any): (...args: T) => void
 {

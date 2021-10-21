@@ -85,7 +85,7 @@ window.onload = async () => {
     // if(candidates.indexOf(selectedCandidate) < 0)
     //   updateSelected(0);
       
-    resultsContainer.innerHTML = "";
+    resultsContainer.innerText = "";
     let nodes = candidates
       .map(c => c.render(str));
     resultsContainer.append(...nodes);
