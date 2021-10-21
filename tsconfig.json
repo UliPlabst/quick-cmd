@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "declaration": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"]
+  },
+  "exclude": [
+    "dist",
+    "node_modules",
+    "nodes",
+    "cwd",
+    "./webpack.config.js"
+  ]
+}

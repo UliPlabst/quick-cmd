@@ -1,0 +1,84 @@
+@import "../variables"
+  
+html
+  -webkit-scrollbar: 0px
+  
+body
+  padding: 5px
+  background-color: $bg
+  color: white
+  font-family: Arial, Helvetica, sans-serif
+  -webkit-scrollbar: 0px
+  overflow: hidden
+  max-width: 600px
+  width: 600px
+  
+.container
+  width: 600px
+  .input-container
+    width: calc(100% - #{$padding-r} - #{$padding-l})
+    padding-right: $padding-r
+    padding-left: $padding-l
+    margin-bottom: 5px
+    .root-input
+      background-color: lighten($bg, 10)
+      width: 100%
+      line-height: 1.5em
+      border: 0px
+      outline: 1px solid $blue
+      color: white
+      border-radius: 0px
+  .results-container
+    overflow: hidden
+    display: flex
+    flex-direction: column
+    width: 100%
+    .result
+      padding: 3px 0px 3px 5px
+      display: flex
+      flex-direction: column
+      &:hover 
+        background-color: $bgHover
+      &.selected
+        background-color: $blue
+      .top
+        font-size: .8em
+        cursor: pointer
+        display: flex
+        vertical-align: center
+        justify-content: space-between
+        overflow: hidden
+        align-items: center
+        .left
+          min-width: 0px
+          text-overflow: ellipsis
+          white-space: nowrap
+          overflow: hidden
+          margin-right: 20px
+        .right
+          margin-right: 5px
+          min-width: 0px
+          // direction: rtl
+          text-overflow: ellipsis
+          white-space: nowrap
+          overflow: hidden
+
+        .icon
+          margin-right: 5px
+        .favicon
+          margin-right: 5px
+        .detail
+          font-size: .8em
+          color: darken(white, 20)
+          margin-left: 15px
+          position: relative
+          top: 2px
+      .bottom
+        font-size: .8em
+        margin-left: 45px
+        >* 
+          font-size: .8em
+  
+.highlight-span
+      .highlight
+        font-weight: bold
