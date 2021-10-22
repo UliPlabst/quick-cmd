@@ -7,6 +7,15 @@ import { createSvgElement, getMatchScore, makeEllipsis, normalize } from "./util
 
 const iconWidth = constants.iconWidth;
 
+function getRelevantPartsFromUrl(url: string)
+{
+  if(String.isNullOrEmpty(url))
+    return "";
+    
+  let u = new URL(url);
+  return (u.host + u.pathname).substr(0, 50)
+}
+
 export abstract class Result<T = any>
 {
   classes: string[] = [];
@@ -133,7 +142,7 @@ export class HistoryResult extends Result<browser.history.HistoryItem>
     this.title           = this.entity.title;
     this.normalizedTitle = normalize(this.title)
     this.titleContent    = makeEllipsis(this.title, constants.maxChars);
-    this._match = (this.title ?? "") + (this.entity.url ?? "")
+    this._match = (this.title ?? "") + getRelevantPartsFromUrl(this.entity.url);
     
     if(!String.isNullOrEmpty(this.entity.url))
       this._right = new HighlightSpan(this.entity.url);
@@ -231,7 +240,7 @@ export class BookmarkResult extends Result<browser.bookmarks.BookmarkTreeNodeExt
     this.titleContent = makeEllipsis(this.title, constants.maxChars);
     if(!String.isNullOrEmpty(this.entity.url))
       this._right = new HighlightSpan(this.entity.url);
-    this._match = (this.title ?? "") + getDomain(this.entity.url)
+    this._match = (this.title ?? "") + getRelevantPartsFromUrl(this.entity.url);
   }
   
   protected _getScore(q: string): number
@@ -324,7 +333,7 @@ export class TabResult extends Result<browser.tabs.Tab>
     if(!String.isNullOrEmpty(this.entity.url))
       this._right = new HighlightSpan(this.entity.url);
       
-    this._match = (this.title ?? "") + getDomain(this.entity.url)
+    this._match = (this.title ?? "") + getRelevantPartsFromUrl(this.entity.url);
   }
   
   _getScore(q: string): number

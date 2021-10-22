@@ -5,10 +5,8 @@ export function getDomain(url: string)
 {
   if(String.isNullOrEmpty(url))
     return null;
-  let m = /(https?:\/\/.*?)($|\/)/.exec(url);
-  if(m)
-    return m[0];
-  return null;
+  
+  return new URL(url).origin;
 }
 
 export function getFaviconImage(el: { url?: string})
