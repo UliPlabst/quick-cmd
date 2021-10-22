@@ -3,6 +3,8 @@ import { options } from "./options";
 
 export function getDomain(url: string)
 {
+  if(String.isNullOrEmpty(url))
+    return null;
   let m = /(https?:\/\/.*?)($|\/)/.exec(url);
   if(m)
     return m[0];

@@ -123,6 +123,7 @@ export class HistoryResult extends Result<browser.history.HistoryItem>
   normalizedTitle: string;
   titleContent: string;
   _right: HighlightSpan;
+  _match: string;
   init()
   {
     super.init();
@@ -132,6 +133,7 @@ export class HistoryResult extends Result<browser.history.HistoryItem>
     this.title           = this.entity.title;
     this.normalizedTitle = normalize(this.title)
     this.titleContent    = makeEllipsis(this.title, constants.maxChars);
+    this._match = (this.title ?? "") + (this.entity.url ?? "")
     
     if(!String.isNullOrEmpty(this.entity.url))
       this._right = new HighlightSpan(this.entity.url);
@@ -139,10 +141,10 @@ export class HistoryResult extends Result<browser.history.HistoryItem>
   
   protected _getScore(q: string): number
   {
-    if(String.isNullOrEmpty(this.entity.title))
+    if(String.isNullOrEmpty(this._match))
       return 0;
     
-    return getMatchScore(this.entity.title, q);
+    return getMatchScore(this._match, q)
   }
   
   protected _getIcon()
@@ -216,6 +218,8 @@ export class BookmarkResult extends Result<browser.bookmarks.BookmarkTreeNodeExt
   normalizedTitle: string;
   titleContent: string;
   _right: HighlightSpan;
+  _match: string;
+  
   init()
   {
     super.init();
@@ -227,14 +231,15 @@ export class BookmarkResult extends Result<browser.bookmarks.BookmarkTreeNodeExt
     this.titleContent = makeEllipsis(this.title, constants.maxChars);
     if(!String.isNullOrEmpty(this.entity.url))
       this._right = new HighlightSpan(this.entity.url);
+    this._match = (this.title ?? "") + getDomain(this.entity.url)
   }
   
   protected _getScore(q: string): number
   {
-    if(String.isNullOrEmpty(this.entity.title))
+    if(String.isNullOrEmpty(this._match))
       return 0;
       
-    return getMatchScore(this.entity.title, q) * 2;
+    return getMatchScore(this._match, q) * 2;
   }
   
   protected _getIcon()
@@ -299,7 +304,8 @@ export class TabResult extends Result<browser.tabs.Tab>
 {
   normalizedTitle: string;
   titleContent: string;
-  _right: HighlightSpan
+  _right: HighlightSpan;
+  _match: string;
   init()
   {
     super.init();
@@ -318,14 +324,15 @@ export class TabResult extends Result<browser.tabs.Tab>
     if(!String.isNullOrEmpty(this.entity.url))
       this._right = new HighlightSpan(this.entity.url);
       
+    this._match = (this.title ?? "") + getDomain(this.entity.url)
   }
   
   _getScore(q: string): number
   {
-    if(String.isNullOrEmpty(this.entity.title))
+    if(String.isNullOrEmpty(this._match))
       return 0;
     
-    return getMatchScore(this.entity.title, q) * 3;
+    return getMatchScore(this._match, q) * 3;
   }
   
   protected _getIcon()

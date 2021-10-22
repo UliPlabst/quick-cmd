@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "quick-cmd",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "An add-on that provides a vscode like quick-command popup. Open with Alt-Shift-P",
   "icons": {
     "48": "icons/icon.svg",
@@ -9,7 +9,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "{b2b1b929-531c-43bc-9329-c7c67721d2e5}",
+      "id": "{6943418e-1aea-4faa-be6f-6d06dd9609e9}",
       "strict_min_version": "63.0"
     }
   },

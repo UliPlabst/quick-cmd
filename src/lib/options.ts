@@ -10,7 +10,7 @@ export async function initOpts()
   if(o && Object.keys(o).any())
   {
     options = {
-      ...options,
+      ...defaultOptions,
       ...o
     }
   }
@@ -22,9 +22,14 @@ export async function saveOpts()
   await browser.storage.local.set(getObject(`options/${v}`, options))
 }
 
+export var defaultOptions = {
+  maxDisplayedItems: 15,
+  fetchFavicons: true,
+  singleLine: false
+}
 
 export var options = {
-  maxDisplayedItems: 20,
+  maxDisplayedItems: 15,
   fetchFavicons: true,
   singleLine: false
 }

@@ -21,11 +21,12 @@ Configure some options by clicking on the settings in your manage extensions fir
 - **Single line**: Will remove the small second line in results that have a second line 
 
 # Build
+- Required: node@14 + npm
 - Setup: `npm install`
 - Build: `npm run build` or `npm run build:watch`
-- Start firefox in extension debug mode `npm run start`
-- Production build (will invoke webpack with mode=production and web-ext build)
+- Production build: (will invoke webpack with mode=production and web-ext build)
   - `npm run build:prod`
+- Start firefox in extension debug mode `npm run start`
   
 # Why
 The firefox address bar already covers a lot of the functionality that my extension provides but it has some drawbacks. I wanted to design a more compact version with more sophisticated filtering support that also allows me to quickly switch to an open tab when I cannot find it in all the tabs that I have open. The firefox while covering 90% of my needs lacks the last 10%.
